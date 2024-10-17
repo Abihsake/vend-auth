@@ -1,0 +1,64 @@
+/* Overide Mat Button Container disabled state for primary*/
+.mat-mdc-button[disabled].mat-primary,
+.mat-mdc-unelevated-button[disabled].mat-primary,
+.mat-mdc-raised-button[disabled].mat-primary,
+.mat-mdc-outlined-button[disabled].mat-primary {
+  background-color: theme('colors.primary.200');
+  color: theme('colors.white');
+}
+
+/* Customise Mat Select Placeholder style*/
+html {
+  --mat-select-trigger-text-size: 14px;
+  --mat-select-trigger-text-tracking: 0em;
+
+  --mat-select-trigger-text-weight: 500;
+  --mat-select-trigger-text-line-height: 20px;
+
+  --mat-menu-item-label-text-size: 14px;
+  --mat-menu-item-label-text-tracking: 0em;
+  --mat-menu-item-label-text-line-height: 20px;
+
+  --mat-option-selected-state-label-text-color: #0e32e5;
+  --mat-full-pseudo-checkbox-selected-icon-color: #0e32e5;
+  --mat-option-label-text-color: theme('colors.gray.900');
+  --mat-option-hover-state-layer-color: theme('colors.gray.50');
+  --mat-option-focus-state-layer-color: theme('colors.gray.50');
+  --mat-option-selected-state-layer-color: theme('colors.gray.100');
+
+  --mat-option-label-text-color: theme('colors.gray.900');
+  --mat-option-label-text-line-height: 20px;
+  --mat-option-label-text-size: theme('fontSize.sm');
+  --mat-option-label-text-tracking: 0em;
+  --mat-option-label-text-weight: theme('fontWeight.medium');
+
+  --mat-select-placeholder-text-color: theme('colors.gray.400');
+  --mat-select-placeholder-text-size: 14px;
+  --mat-select-placeholder-text-tracking: 0em;
+  --mat-select-placeholder-text-weight: 300;
+  --mat-select-placeholder-text-line-height: 20px;
+
+  // Customise Mat Select [multiple mode] checkbox style
+  --mat-full-pseudo-checkbox-selected-icon-color: #0e32e5;
+  --mat-minimal-pseudo-checkbox-selected-checkmark-color: #0e32e5;
+}
+
+/* Add padding to Mat Select Trigger on the x-axis to display select properly inside `.input-wrapper` */
+.mat-mdc-select-trigger {
+  padding-right: 14px;
+  padding-left: 14px;
+}
+
+/* Add box-shadow, border-radius and margin-top to Mat Select Panel to match UI design for Mat-Select */
+.cdk-overlay-pane:not(.mat-mdc-select-panel-above) div.mat-mdc-select-panel {
+  margin-top: theme('margin.4');
+  border-radius: theme('borderRadius.xl');
+}
+
+.cdk-overlay-pane.mat-mdc-select-panel-above div.mat-mdc-select-panel {
+  border-radius: theme('borderRadius.xl');
+}
+
+.cdk-overlay-pane div.mat-mdc-select-panel {
+  box-shadow: theme('boxShadow.xl');
+}

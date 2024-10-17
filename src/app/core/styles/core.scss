@@ -1,0 +1,53 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// SCSS Variables
+@import 'var';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($vend-auth-theme);
+@include mat.progress-spinner-color($progress-spinner-theme);
+
+@import './tailwind.scss';
+
+// Partials
+@import 'partials/scrollbar';
+@import 'partials/plugins/angular-material';
+
+/* You can add global styles to this file, and also import other style files */
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  @media (max-width: 576px) {
+    font-size: 13px;
+  }
+  height: 100%;
+  // overflow: hidden;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: theme('fontFamily.sans');
+  font-size: theme('fontSize.sm');
+  font-weight: theme('fontWeight.normal');
+  line-height: theme('lineHeight.normal');
+  color: #343434;
+}
+
+div {
+  box-sizing: border-box;
+}

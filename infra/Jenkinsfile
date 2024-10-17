@@ -1,0 +1,163 @@
+pipeline {
+  agent {
+    label "ec2-fleet"
+  }
+  environment {
+    DOCKER_REPO="607492160452.dkr.ecr.us-east-1.amazonaws.com"
+    DOCKER_IMAGE_NAME="vend-auth"
+    CHART_FOLDER_NAME="vend-auth-fe-chart"
+    NAMESPACE_PREFIX="vend-auth"
+    DOCKER_HOST = 'tcp://172.26.0.47:2375'
+  }
+    
+    tools {nodejs "nodejs"}
+    stages {
+
+        stage('Update Environment File') { 
+            when {
+                anyOf {
+                    branch "dev"
+                    branch "staging"
+                    branch "main"
+                }
+            } 
+            steps { 
+                script {
+                    if (env.BRANCH_NAME == 'staging') {
+                        sh """
+                            sed -i 's|-dev|-staging|g' ./src/environments/environment.ts
+                            sed -i 's|-dev|-staging|g' ./src/environments/environment.prod.ts
+                            cat ./src/environments/environment.ts
+                        """
+                    } else if (env.BRANCH_NAME == 'main') {
+                        sh """
+                            sed -i 's|-dev||g' ./src/environments/environment.ts
+                            sed -i 's|-dev||g' ./src/environments/environment.prod.ts
+                            
+                            sed -i 's|-staging||g' ./src/environments/environment.ts
+                            sed -i 's|-staging||g' ./src/environments/environment.prod.ts
+                            cat ./src/environments/environment.ts
+                        """
+                    } else {
+                        echo 'No environment update required for this branch.'
+                    }
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+                steps {
+                    script {
+                    scannerHome = tool 'sonarqube'
+            }
+                    withSonarQubeEnv('SonarCloud') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+            }
+          }
+        } 
+
+        stage('Build') { 
+            when {
+                anyOf {
+                    branch "dev"
+                    branch "main"
+                    branch "staging"
+                }
+            } 
+            steps { 
+                script{
+                     latest = docker.build("${DOCKER_IMAGE_NAME}")
+                     branch = docker.build("${DOCKER_IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+               }
+            }
+        }
+
+        stage('Push to ECR') { 
+            when {
+                anyOf {
+                    branch "dev"
+                    branch "main"
+                    branch "staging"
+                }
+            }
+            steps { 
+                script{
+                    docker.withRegistry("https://${DOCKER_REPO}/${DOCKER_IMAGE_NAME}", "ecr:us-east-1:aws-ecr-cred") {
+                        docker.image("${DOCKER_IMAGE_NAME}:latest").push()
+                        docker.image("${DOCKER_IMAGE_NAME}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}").push()
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Nobus nonprod Cluster') {
+            when {
+                anyOf {
+                    branch "dev"
+                    branch "staging"
+                }
+            }
+            steps {
+                script {
+                    // Bind the kubeconfig file
+                    withCredentials([file(credentialsId: 'nobus-k8s-kube-config', variable: 'KUBECONFIG')]) {
+
+                        sh '''
+                            chmod 600 "$KUBECONFIG"
+                            mkdir -p ~/.kube
+                            cp "$KUBECONFIG" ~/.kube/config
+                        '''
+
+                        // Set the Kubernetes context
+                        sh 'kubectx vend'
+                        
+                        // Helm upgrade/install command;
+                        sh """
+                            helm upgrade --install --timeout 300s \
+                            --set image.repository=${DOCKER_REPO}/${DOCKER_IMAGE_NAME} \
+                            --set image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER} \
+                            ${DOCKER_IMAGE_NAME} ./infra/${CHART_FOLDER_NAME} \
+                            -f ./infra/${CHART_FOLDER_NAME}/values-${env.BRANCH_NAME}.yaml \
+                            -n ${NAMESPACE_PREFIX}-${env.BRANCH_NAME} \
+                            --create-namespace
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Nobus prod Cluster') {
+            when {
+                anyOf {
+                    branch "main"
+                }
+            }
+            steps {
+                script {
+                    // Bind the kubeconfig file
+                    withCredentials([file(credentialsId: 'nobus-prod-k8s-kube-config', variable: 'KUBECONFIG')]) {
+                        sh '''
+                            chmod 600 "$KUBECONFIG"
+                            mkdir -p ~/.kube
+                            cp "$KUBECONFIG" ~/.kube/config
+                        '''
+                        // Set the Kubernetes context
+                        sh 'kubectx vendease-prod-nobus-cluster'
+                        
+                        // Helm upgrade/install command;
+                        sh """
+                            helm upgrade --install --timeout 300s \
+                            --set image.repository=${DOCKER_REPO}/${DOCKER_IMAGE_NAME} \
+                            --set image.tag=${env.BRANCH_NAME}-${env.BUILD_NUMBER} \
+                            ${DOCKER_IMAGE_NAME} ./infra/${CHART_FOLDER_NAME} \
+                            -f ./infra/${CHART_FOLDER_NAME}/values-prod.yaml \
+                            -n ${NAMESPACE_PREFIX}-prod \
+                            --create-namespace
+                        """
+                    }
+                }
+            }
+        }
+
+    }
+}

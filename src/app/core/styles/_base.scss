@@ -1,0 +1,258 @@
+input,
+textarea {
+  box-sizing: content-box;
+  line-height: 1.5;
+}
+
+label {
+  color: theme('colors.gray.700');
+  font-weight: theme('fontWeight.medium');
+  font-size: 14px;
+  line-height: 20px;
+
+  &:is(.required) {
+    &::after {
+      content: '*';
+      color: theme('colors.error.600');
+    }
+  }
+}
+
+// remove default browser setup on input:-webkit-autofill
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+
+button:focus {
+  outline: unset !important;
+}
+
+input {
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  box-shadow: unset;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  height: 44px;
+  padding-left: 14px;
+  padding-right: 14px;
+  color: theme('colors.gray.900');
+
+  font-weight: theme('fontWeight.medium');
+  font-size: theme('fontSize.sm');
+  line-height: 20px;
+
+  display: flex;
+  flex: none;
+  align-self: stretch;
+  flex-direction: row;
+  align-items: center;
+
+  &:is(.ng-dirty.ng-touched.ng-invalid) {
+    border: 1px solid theme('colors.error.300');
+    box-shadow: unset;
+  }
+}
+
+input:is(.no-border-input) {
+  background: theme('colors.white');
+  border: none;
+  box-shadow: unset;
+  border-radius: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+input:focus:not(:disabled):not([readonly]) {
+  border: 1px solid theme('colors.primary.600');
+  box-shadow:
+    0px 0px 0px 4px #ebeeff,
+    0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+
+  &:is(.ng-dirty.ng-touched.ng-invalid) {
+    border: 1px solid theme('colors.error.300');
+    box-shadow:
+      0px 0px 0px 4px #ffe4e2,
+      0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+}
+
+textarea {
+  font-weight: theme('fontWeight.medium');
+  font-size: theme('fontSize.sm');
+  line-height: 20px;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  padding: 10px 14px 10px 14px;
+  color: #101828;
+
+  &:is(.ng-dirty.ng-touched.ng-invalid) {
+    border: 1px solid theme('colors.error.300');
+    box-shadow: unset;
+  }
+}
+
+textarea::placeholder {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 24px;
+  color: #101828;
+}
+
+textarea:focus:not(:disabled):not([readonly]) {
+  border: 1px solid theme('colors.primary.600');
+  box-shadow:
+    0px 0px 0px 4px #ebeeff,
+    0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  height: 44px;
+  color: #101828;
+  font-weight: theme('fontWeight.medium');
+  font-size: theme('fontSize.sm');
+  line-height: 20px;
+  cursor: pointer;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: unset;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  font-weight: 300;
+  font-size: theme('fontSize.sm');
+  line-height: 24px;
+  color: theme('colors.gray.400');
+}
+
+input:disabled,
+input:read-only,
+textarea:disabled,
+textarea:read-only,
+select:disabled,
+select:read-only {
+  background: theme('colors.gray.50');
+  color: theme('colors.gray.500');
+}
+
+.input-wrapper:has(input:disabled),
+.input-wrapper:has(input:read-only),
+.input-wrapper:has(textarea:disabled),
+.input-wrapper:has(textarea:read-only),
+.input-wrapper:has(select:disabled),
+.input-wrapper:has(select:read-only),
+.input-wrapper:has(mat-select.mat-mdc-select-disabled) {
+  background: theme('colors.gray.50');
+  color: theme('colors.gray.500');
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.custom-menu-shadow {
+  box-shadow:
+    0px 8px 8px -4px rgba(16, 24, 40, 0.03),
+    0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+}
+
+.custom-card-shadow {
+  box-shadow: 0px 9px 20px 0px rgba(47, 71, 123, 0.09);
+}
+
+.input-wrapper {
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  box-shadow: unset;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  border-radius: 8px;
+  height: 44px;
+
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  align-items: center;
+
+  &.dynamic-height {
+    height: unset;
+    min-height: 44px;
+    height: auto;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  input,
+  textarea {
+    border: unset;
+    box-shadow: unset;
+    background: transparent;
+    outline: unset;
+    height: unset;
+    flex: auto;
+
+    &:is(.ng-dirty.ng-touched.ng-invalid) {
+      border: unset;
+      box-shadow: unset;
+    }
+  }
+
+  input:focus:not(:disabled):not([readonly]),
+  textarea:focus:not(:disabled):not([readonly]) {
+    border: unset;
+    box-shadow: unset;
+
+    &:is(.ng-dirty.ng-touched.ng-invalid) {
+      border: unset;
+      box-shadow: unset;
+    }
+  }
+}
+
+.input-wrapper:focus-within {
+  border: 1px solid theme('colors.primary.600');
+  box-shadow:
+    0px 0px 0px 4px #ebeeff,
+    0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+
+  &:has(:is(.ng-dirty.ng-touched.ng-invalid)) {
+    border: 1px solid theme('colors.error.300');
+    box-shadow:
+      0px 0px 0px 4px #ffe4e2,
+      0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+}
+
+.input-wrapper {
+  &:has(:is(.ng-dirty.ng-touched.ng-invalid)) {
+    border: 1px solid theme('colors.error.300');
+  }
+}

@@ -1,0 +1,354 @@
+<div
+  class="custom-card-shadow w-full lg:w-[555px] flex flex-col gap-6 px-6 lg:px-10 xl:px-16 pt-8 pb-[4.5rem] bg-white rounded-2xl"
+>
+  <div class="w-full flex flex-col">
+    <h1 class="text-2xl xxs:text-[28px] leading-[42px] font-bold text-[#111111]">
+      {{ pageTitle | translate }}
+    </h1>
+    <p class="text-[#343434] font-medium text-sm leading-[27px]">
+      {{ pageSubtitle | translate }}
+    </p>
+  </div>
+
+  <form class="w-full" [formGroup]="signUpForm" (ngSubmit)="onSubmit(signUpFormData)">
+    <div class="flex w-full flex-col gap-[13px]">
+      <div class="w-full flex flex-col">
+        <div *ngIf="apiError.status" class="w-full py-5">
+          <app-error-display [error]="apiError.message"></app-error-display>
+        </div>
+      </div>
+
+      <div
+        class="grid grid-flow-row grid-cols-1 gap-[.8125rem]"
+        formGroupName="signUpBusinessDetailsForm"
+        *ngIf="signUpFormStep === SignUpStepEnum.BusinessDetails"
+      >
+        <div class="flex w-full flex-col gap-1.5">
+          <label for="fullName">
+            {{ 'form.full_name.label' | translate }}
+          </label>
+          <input
+            id="fullName"
+            data-auth-testid="fullName-input"
+            formControlName="fullName"
+            type="text"
+            placeholder="{{ 'form.full_name.placeholder' | translate }}"
+            required
+          />
+
+          <ng-container *ngIf="displayError(signUpFormData.signUpBusinessDetailsForm.controls.fullName)">
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpBusinessDetailsForm.controls.fullName.hasError('required')"
+            >
+              {{ 'form.full_name.error.required' | translate }}
+            </mat-error>
+          </ng-container>
+        </div>
+
+        <div class="flex w-full flex-col gap-1.5">
+          <label for="businessName">
+            {{ 'form.business_name.label' | translate }}
+          </label>
+          <input
+            data-auth-testid="businessName-input"
+            id="businessName"
+            formControlName="businessName"
+            type="text"
+            placeholder="{{ 'form.business_name.placeholder' | translate }}"
+            required
+          />
+
+          <ng-container *ngIf="displayError(signUpFormData.signUpBusinessDetailsForm.controls.businessName)">
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpBusinessDetailsForm.controls.businessName.hasError('required')"
+            >
+              {{ 'form.business_name.error.required' | translate }}
+            </mat-error>
+          </ng-container>
+        </div>
+
+        <div class="flex w-full flex-col gap-1.5">
+          <label for="businessType">{{ 'form.business_type.label' | translate }}</label>
+
+          <div class="input-wrapper">
+            <mat-select
+              id="businessType"
+              data-auth-testid="businessType-dropdown"
+              formControlName="businessType"
+              placeholder="{{ 'form.business_type.placeholder' | translate }}"
+              required
+            >
+              <ng-container *ngIf="SIGNUP_FORMDATA?.businessTypes as businessTypes">
+                <ng-container *ngFor="let type of businessTypes">
+                  <mat-option [value]="type.id">
+                    {{ type.name }}
+                  </mat-option>
+                </ng-container>
+              </ng-container>
+            </mat-select>
+          </div>
+
+          <ng-container *ngIf="displayError(signUpFormData.signUpBusinessDetailsForm.controls.businessType)">
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpBusinessDetailsForm.controls.businessType.hasError('required')"
+            >
+              {{ 'form.business_type.error.required' | translate }}
+            </mat-error>
+          </ng-container>
+        </div>
+
+        <div class="flex w-full flex-col gap-1.5">
+          <label for="email"> {{ 'form.email.label' | translate }} </label>
+
+          <div class="input-wrapper px-3.5">
+            <mat-icon class="w-5 h-5 fill-none stroke-[#667085]" [svgIcon]="MAIL_ICON.name"></mat-icon>
+            <input
+              id="email"
+              required
+              data-auth-testid="email-input"
+              formControlName="email"
+              type="email"
+              placeholder="{{ 'form.email.placeholder' | translate }}"
+            />
+          </div>
+
+          <ng-container *ngIf="displayError(signUpFormData.signUpBusinessDetailsForm.controls.email)">
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpBusinessDetailsForm.controls.email.hasError('required')"
+            >
+              {{ 'form.email.error.required' | translate }}
+            </mat-error>
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpBusinessDetailsForm.controls.email.hasError('pattern')"
+            >
+              {{ 'form.email.error.pattern' | translate }}
+            </mat-error>
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpBusinessDetailsForm.controls.email.hasError('nonUniqueEmail')"
+            >
+              {{ 'form.email.error.non_unique' | translate }}
+            </mat-error>
+          </ng-container>
+        </div>
+
+        <div class="flex w-full flex-col gap-[6px]">
+          <label for="phoneNumber">{{ 'form.phone_number.label' | translate }}</label>
+          <ng-container>
+            <app-phonenumber-input
+              data-auth-testid="phoneNumber-input"
+              formControlName="phoneNumber"
+              [countries]="countries"
+              (countryCodeSelection)="setCountry($event)"
+              [invalid]="displayError(signUpFormData.signUpBusinessDetailsForm.controls.phoneNumber)"
+            ></app-phonenumber-input>
+          </ng-container>
+
+          <ng-container *ngIf="displayError(signUpFormData.signUpBusinessDetailsForm.controls.phoneNumber)">
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpBusinessDetailsForm.controls.phoneNumber.hasError('required')"
+            >
+              {{ 'form.phone_number.error.required' | translate }}
+            </mat-error>
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpBusinessDetailsForm.controls.phoneNumber.hasError('invalidProperty')"
+            >
+              {{ 'form.phone_number.error.pattern' | translate }}
+            </mat-error>
+          </ng-container>
+        </div>
+        <div class="flex w-full flex-col">
+          <button
+            data-rms-testid="continue_btn"
+            mat-flat-button
+            color="primary"
+            type="submit"
+            class="h-11 w-full rounded-lg text-base font-medium"
+            [disabled]="signUpFormData.signUpBusinessDetailsForm.invalid"
+          >
+            <div class="flex flex-row items-center justify-center gap-2">
+              <span class="text-sm font-semibold">{{ 'common.continue' | translate }}</span>
+              <mat-progress-spinner
+                color="accent"
+                *ngIf="isSigningUp"
+                mode="indeterminate"
+                diameter="20"
+                strokeWidth="3"
+              ></mat-progress-spinner>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="w-full flex flex-col gap-[13px]"
+        *ngIf="signUpFormStep === SignUpStepEnum.Password"
+        formGroupName="signUpPasswordForm"
+      >
+        <div class="flex w-full flex-col gap-[6px]">
+          <label for="password">
+            {{ 'form.password.label' | translate }}
+          </label>
+          <div class="input-wrapper">
+            <input
+              data-auth-testid="password-input"
+              id="password"
+              formControlName="password"
+              [type]="passwordFields['password'].inputType"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              class="px-2 flex flex-row items-center justify-center"
+              (click)="toggleVisibility('password', !passwordFields['password'].visible)"
+            >
+              <mat-icon
+                class="h-4 w-4"
+                [svgIcon]="passwordFields['password'].visible ? EYE_SLASH_ICON : EYE_ICON"
+              ></mat-icon>
+            </button>
+          </div>
+          <ng-container *ngIf="displayError(signUpFormData.signUpPasswordForm.controls.password)">
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpPasswordForm.controls.password.hasError('required')"
+            >
+              {{ 'form.password.error.required' | translate }}
+            </mat-error>
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signUpFormData.signUpPasswordForm.controls.password.hasError('pattern')"
+            >
+              {{ 'form.password.error.pattern' | translate }}
+            </mat-error>
+          </ng-container>
+        </div>
+
+        <div class="flex w-full flex-col gap-[6px]">
+          <label for="confirmPassword">
+            {{ 'form.confirm_password.label' | translate }}
+          </label>
+          <div class="input-wrapper">
+            <input
+              data-auth-testid="confirmPassword-input"
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              [type]="passwordFields['confirmPassword'].inputType"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              class="px-2 flex flex-row items-center justify-center"
+              (click)="toggleVisibility('confirmPassword', !passwordFields['confirmPassword'].visible)"
+            >
+              <mat-icon
+                class="h-4 w-4 cursor-pointer"
+                [svgIcon]="passwordFields['confirmPassword'].visible ? EYE_SLASH_ICON : EYE_ICON"
+              ></mat-icon>
+            </button>
+          </div>
+
+          <ng-container *ngIf="displayError(signUpFormData.signUpPasswordForm.controls.confirmPassword)">
+            <mat-error *ngIf="signUpFormData.signUpPasswordForm.controls.confirmPassword.hasError('required')">
+              {{ 'form.confirm_password.error.required' | translate }}
+            </mat-error>
+            <mat-error *ngIf="signUpFormData.signUpPasswordForm.controls.password.hasError('pattern')">
+              {{ 'form.confirm_password.error.pattern' | translate }}
+            </mat-error>
+          </ng-container>
+          <mat-error
+            class="text-error-500 text-xs font-normal"
+            *ngIf="
+              signUpFormData.signUpPasswordForm.hasError('passwordMismatch') &&
+              signUpFormData.signUpPasswordForm.controls.confirmPassword.dirty &&
+              signUpFormData.signUpPasswordForm.controls.confirmPassword.valid
+            "
+            >{{ 'form.confirm_password.error.password_mismatch' | translate }}
+          </mat-error>
+        </div>
+
+        <div class="flex w-full flex-row items-center gap-5">
+          <mat-checkbox data-rms-testid="terms-and-conditions" color="primary" formControlName="termsAndConditions">
+            <label for="terms-and-conditions" class="text-sm font-light text-gray-700">
+              {{ 'common.i_agree_to_vendease' | translate }}
+              <a
+                target="_blank"
+                rel="noreferrer noopener"
+                href="https://policy.vendease.com/policies/legal/terms-and-conditions"
+                class="font-bold text-primary-600"
+              >
+                {{ 'common.terms_and_condition' | translate }},
+              </a>
+              <a
+                target="_blank"
+                rel="noreferrer noopener"
+                href="https://policy.vendease.com/policies/legal/intellectual-property"
+                class="font-bold text-primary-600"
+              >
+                {{ 'common.intellectual_property_policy' | translate }}
+              </a>
+              {{ 'common.and' | translate }}
+              <a
+                target="_blank"
+                rel="noreferrer noopener"
+                href="https://policy.vendease.com/policies/legal/privacy-policy"
+                class="font-bold text-primary-600"
+              >
+                {{ 'common.privacy_policy' | translate }}.
+              </a>
+            </label>
+          </mat-checkbox>
+        </div>
+
+        <div class="flex w-full flex-col">
+          <button
+            data-rms-testid="continue_btn"
+            mat-flat-button
+            color="primary"
+            [disabled]="signUpFormData.signUpPasswordForm.invalid"
+            type="submit"
+            class="h-11 w-full rounded-lg text-base font-medium"
+          >
+            <div class="flex flex-row items-center justify-center gap-2">
+              <span class="text-sm font-semibold">{{ 'common.create_account' | translate }}</span>
+              <mat-progress-spinner
+                color="accent"
+                *ngIf="isSigningUp"
+                mode="indeterminate"
+                diameter="20"
+                strokeWidth="3"
+              ></mat-progress-spinner>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="flex w-full flex-row items-center justify-center gap-7">
+    <div class="flex-auto border-t-2 border-t-gray-200"></div>
+    <p class="flex-none text-center text-base font-medium text-gray-400">{{ 'common.or' | translate | uppercase }}</p>
+    <div class="flex-auto border-t-2 border-t-gray-200"></div>
+  </div>
+
+  <div class="flex w-full flex-row items-center justify-center text-center">
+    <p class="text-sm text-gray-700 font-medium">
+      {{ 'auth.sign_up.already_use_vendease' | translate }}
+      <span
+        data-rms-testid="login-text pl-[.625rem]"
+        class="cursor-pointer font-semibold text-primary-600"
+        [routerLink]="['/auth/sign-in']"
+        >{{ 'auth.sign_in.login' | translate }}</span
+      >
+    </p>
+  </div>
+</div>

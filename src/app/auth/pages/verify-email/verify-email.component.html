@@ -1,0 +1,123 @@
+<div
+  class="custom-card-shadow w-full lg:w-[448px] xl:w-[555px] flex flex-col gap-6 px-6 lg:px-10 xl:px-16 py-8 bg-white rounded-2xl overflow-hidden"
+>
+  <ng-container *ngIf="pageAction === 'isVerifyingEmail'" [ngTemplateOutlet]="verifyingEmail"></ng-container>
+  <ng-container
+    *ngIf="pageAction === 'resendEmailVerification'"
+    [ngTemplateOutlet]="resendEmailVerificationLink"
+  ></ng-container>
+</div>
+
+<ng-template #verifyingEmail>
+  <div class="flex flex-row items-center justify-center">
+    <img [src]="SPIN_LOADER" alt="verification in progress" />
+  </div>
+  <div class="flex flex-col items-center gap-4">
+    <div class="text-center">
+      <h1 class="text-xl leading-[34px] font-bold text-[#343434]">
+        {{ 'auth.verify_email.page_title' | translate }}
+      </h1>
+      <p class="text-center text-base font-medium leading-6 text-gray-600">{{ 'common.please_wait' | translate }}</p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #resendEmailVerificationLink>
+  <div class="w-full flex flex-col">
+    <h1 class="text-2xl xxs:text-[28px] leading-[42px] font-bold text-[#111111]">
+      {{ 'auth.verify_email.page_title_b' | translate }}
+    </h1>
+    <p class="text-[#343434]">
+      <span> {{ 'auth.verify_email.page_subtitle' | translate }}</span>
+    </p>
+  </div>
+
+  <form
+    class="w-full mb-4"
+    [formGroup]="resendEmailVerificationForm"
+    (ngSubmit)="resendEmailVerificationForm.valid && onSubmit(resendEmailVerificationFormData)"
+  >
+    <div class="flex w-full flex-col gap-[13px]">
+      <div class="w-full flex flex-col">
+        <mat-divider class="border-gray-200"></mat-divider>
+
+        <div *ngIf="apiError.status" class="w-full px-2.5 py-5">
+          <app-error-display [error]="apiError.message"></app-error-display>
+        </div>
+      </div>
+
+      <div class="flex w-full flex-col gap-2">
+        <label for="email" class="text-sm font-medium text-gray-700">
+          {{ 'form.email.label' | translate }}
+        </label>
+
+        <div
+          class="flex h-11 w-full flex-row items-center gap-1 rounded-lg border px-[14px] shadow-sm"
+          [ngClass]="{
+            'border-error-300': displayError(resendEmailVerificationFormData.email),
+            'border-gray-300': !displayError(resendEmailVerificationFormData.email)
+          }"
+        >
+          <mat-icon class="h-5 w-5 flex-none fill-none stroke-[#667085]" [svgIcon]="MAIL_ICON.name"></mat-icon>
+          <input
+            id="email"
+            formControlName="email"
+            [pattern]="REG_EXP.EMAIL"
+            class="h-10 flex-auto w-full border-0 bg-transparent px-1 shadow-none outline-none"
+            type="email"
+            placeholder="{{ 'form.email.placeholder' | translate }}"
+            required
+          />
+        </div>
+
+        <ng-container *ngIf="displayError(resendEmailVerificationFormData.email)">
+          <mat-error
+            class="text-xs font-normal text-error-500"
+            *ngIf="resendEmailVerificationFormData.email.hasError('required')"
+          >
+            {{ 'form.email.error.required' | translate }}
+          </mat-error>
+          <mat-error
+            class="text-xs font-normal text-error-500"
+            *ngIf="resendEmailVerificationFormData.email.hasError('pattern')"
+          >
+            {{ 'form.email.error.pattern' | translate }}
+          </mat-error>
+        </ng-container>
+      </div>
+
+      <div class="flex w-full flex-col">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="resendEmailVerificationForm.invalid"
+          class="h-11 w-full rounded-lg text-base font-medium"
+        >
+          <div class="flex flex-row items-center justify-center gap-2">
+            <span class="text-sm font-semibold">{{ 'auth.button.resend_link' | translate }}</span>
+            <mat-progress-spinner
+              color="accent"
+              *ngIf="isSendingVerificationLink"
+              mode="indeterminate"
+              diameter="20"
+              strokeWidth="3"
+            ></mat-progress-spinner>
+          </div>
+        </button>
+      </div>
+
+      <div class="flex w-full flex-col">
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          [routerLink]="['/auth/sign-in']"
+          class="h-11 w-full rounded-lg text-base font-medium"
+        >
+          {{ 'auth.button.back_to_login' | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

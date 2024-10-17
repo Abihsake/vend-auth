@@ -1,0 +1,22 @@
+---
+- name: Create AWS RDS Snapshot
+  hosts: localhost
+  connection: local
+  vars_files:
+    - extra_vars.yml  # Include the external variable file
+
+  tasks:
+    - name: Create RDS Snapshot
+      amazon.aws.rds_instance_snapshot:
+        profile: "{{ aws_profile }}"
+        region: "{{ region }}"
+        db_instance_identifier: "{{ db_instance_identifier }}"
+        db_snapshot_identifier: "snapshot-{{ db_instance_identifier }}-{{ date }}"
+      register: snapshot
+
+    # Add a debug task to display the 'snapshot' variable
+    - name: Display Snapshot Information
+      debug:
+        var: snapshot
+
+    

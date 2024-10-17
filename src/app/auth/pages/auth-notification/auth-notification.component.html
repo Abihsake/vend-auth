@@ -1,0 +1,230 @@
+<div
+  class="custom-card-shadow w-full lg:w-[448px] xl:w-[555px] flex flex-col gap-6 px-6 lg:px-10 xl:px-16 pt-8 pb-[4.75rem] bg-white rounded-2xl overflow-hidden"
+>
+  <ng-container
+    *ngIf="notificationType === NOTIFICATION_TYPES.SIGNUP_SUCCESS"
+    [ngTemplateOutlet]="signupSuccess"
+  ></ng-container>
+  <ng-container
+    *ngIf="notificationType === NOTIFICATION_TYPES.VERIFICATION_FAILED"
+    [ngTemplateOutlet]="verificationExpired"
+  ></ng-container>
+  <ng-container
+    *ngIf="notificationType === NOTIFICATION_TYPES.VERIFICATION_SUCCESS"
+    [ngTemplateOutlet]="verificationSuccess"
+  ></ng-container>
+  <ng-container
+    *ngIf="notificationType === NOTIFICATION_TYPES.PASSWORD_RESET_SUCCESS"
+    [ngTemplateOutlet]="resetPasswordSuccess"
+  ></ng-container>
+  <ng-container
+    *ngIf="notificationType === NOTIFICATION_TYPES.VERIFICATION_SENT"
+    [ngTemplateOutlet]="emailVerificationLinkSent"
+  ></ng-container>
+  <ng-container
+    *ngIf="notificationType === NOTIFICATION_TYPES.PASSWORD_RESET_LINK_SENT"
+    [ngTemplateOutlet]="passwordResetLinkSent"
+  ></ng-container>
+  <ng-container
+    *ngIf="notificationType === NOTIFICATION_TYPES.PASSWORD_CREATE_SUCCESS"
+    [ngTemplateOutlet]="createPasswordSuccess"
+  ></ng-container>
+</div>
+
+<ng-template #signupSuccess>
+  <div class="flex w-full flex-col gap-10">
+    <h1 class="text-xl leading-[34px] font-bold text-[#343434]">
+      {{ 'common.thank_you_for_creating_an_account' | translate }}
+    </h1>
+
+    <p class="text-base font-medium leading-6 text-gray-500">
+      {{ 'auth.auth_notification.we_have_sent_a_verification_link_to_your_email' | translate }}
+    </p>
+
+    <div class="flex flex-col gap-6.5">
+      <div class="text-primary font-semibold cursor-pointer" [routerLink]="['/auth/verify-email']">
+        {{ 'auth.button.resend_verification_link' | translate }}
+      </div>
+
+      <div class="text-primary font-semibold cursor-pointer" [routerLink]="['/auth/sign-in']">
+        {{ 'auth.sign_in.login' | translate }}
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #verificationExpired>
+  <div class="flex w-full flex-col gap-6">
+    <div class="flex w-full flex-col gap-[13px]">
+      <h1 class="text-2xl leading-[42px] font-bold text-[#111111]">
+        {{ 'auth.auth_notification.email_confirmation_failed' | translate }}
+      </h1>
+
+      <div class="flex flex-row items-center justify-center py-8">
+        <img [src]="ILLUSTRATIONS.FAILED_ACTION" alt="unsuccessful action illustration" />
+      </div>
+
+      <div class="w-full flex flex-col gap-1">
+        <p class="text-sm font-medium leading-6 text-[#343434]">
+          {{ 'auth.auth_notification.verification_link_has_expired' | translate }}
+        </p>
+        <br />
+        <p class="text-sm font-medium leading-6 text-[#343434]">
+          {{ 'auth.auth_notification.request_new_verification_link' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex w-full flex-row justify-center">
+      <button
+        [routerLink]="['/auth/verify-email']"
+        mat-flat-button
+        color="primary"
+        type="button"
+        class="h-11 w-full rounded-lg text-base font-semibold"
+      >
+        {{ 'auth.button.resend_verification_link' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #verificationSuccess>
+  <div class="flex w-full flex-col gap-6">
+    <div class="flex w-full flex-col gap-[13px]">
+      <h1 class="text-[28px] leading-[42px] font-bold text-[#111111]">
+        {{ 'auth.auth_notification.verification_successful' | translate }}
+      </h1>
+
+      <div class="flex flex-row items-center justify-center py-8">
+        <img [src]="ILLUSTRATIONS.SUCCESSFUL_ACTION" alt="successful action illustration" />
+      </div>
+
+      <div class="w-full flex flex-col">
+        <p class="text-sm font-medium leading-6 text-[#343434]">
+          {{ 'auth.auth_notification.welcome_to_vendease.title' | translate }}
+        </p>
+        <br />
+        <p class="text-sm font-medium leading-6 text-[#343434]">
+          {{ 'auth.auth_notification.welcome_to_vendease.subtitle' | translate }}
+        </p>
+        <br />
+        <p class="text-sm font-medium leading-6 text-[#343434]">
+          {{ 'auth.auth_notification.we_sent_you_an_email_with_next_steps_and_tips' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="flex w-full flex-row justify-center">
+      <button
+        (click)="continue()"
+        mat-flat-button
+        color="primary"
+        type="button"
+        class="h-11 w-full rounded-lg text-base font-semibold"
+      >
+        {{ 'common.continue' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #emailVerificationLinkSent>
+  <div class="flex w-full flex-col items-center gap-10">
+    <h1 class="text-xl leading-[34px] font-bold text-[#343434]">
+      {{ 'common.thank_you_for_creating_an_account' | translate }}
+    </h1>
+
+    <p class="text-center text-base font-medium leading-6 text-gray-500">
+      {{ 'auth.auth_notification.we_have_sent_a_verification_link_to_your_email' | translate }}
+    </p>
+
+    <div class="flex flex-col gap-6.5">
+      <div class="text-primary font-semibold cursor-pointer" [routerLink]="['/auth/verify-email']">
+        {{ 'auth.button.resend_verification_link' | translate }}
+      </div>
+
+      <div class="text-primary font-semibold cursor-pointer" [routerLink]="['/auth/sign-in']">
+        {{ 'auth.sign_in.login' | translate }}
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #resetPasswordSuccess>
+  <div class="flex w-full flex-col items-center gap-3.5">
+    <h1 class="text-xl leading-[34px] font-bold text-[#343434]">
+      {{ 'auth.auth_notification.password_reset.title' | translate }}
+    </h1>
+
+    <div class="flex flex-row items-center justify-center py-8">
+      <img [src]="ILLUSTRATIONS.SUCCESSFUL_ACTION" alt="successful action illustration" />
+    </div>
+
+    <p class="text-sm font-medium leading-6 text-[#343434]">
+      {{ 'auth.auth_notification.password_reset.subtitle' | translate }}
+    </p>
+  </div>
+
+  <div class="flex w-full flex-row justify-center">
+    <button
+      [routerLink]="['/auth/sign-in']"
+      mat-flat-button
+      color="primary"
+      type="button"
+      class="h-11 w-full rounded-lg text-base font-semibold"
+    >
+      {{ 'auth.button.back_to_login' | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #passwordResetLinkSent>
+  <div class="flex w-full flex-col gap-10">
+    <h1 class="text-xl leading-[34px] font-bold text-[#343434]">
+      {{ 'auth.auth_notification.we_sent_you_an_email' | translate }}
+    </h1>
+
+    <p class="text-base font-medium leading-6 text-gray-500">
+      {{ 'auth.auth_notification.password_reset_email_link_sent_to_your_email' | translate }}
+    </p>
+
+    <div class="flex flex-col gap-6.5">
+      <div class="text-primary font-semibold cursor-pointer" [routerLink]="['/auth/forgot-password']">
+        {{ 'auth.auth_notification.click_to_resend' | translate }}
+      </div>
+
+      <div class="text-primary font-semibold cursor-pointer" [routerLink]="['/auth/sign-in']">
+        {{ 'auth.sign_in.login' | translate }}
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #createPasswordSuccess>
+  <div class="flex w-full flex-col items-center gap-3.5">
+    <h1 class="text-xl leading-[34px] font-bold text-[#343434]">
+      {{ 'auth.auth_notification.password_create.title' | translate }}
+    </h1>
+
+    <div class="flex flex-row items-center justify-center py-8">
+      <img [src]="ILLUSTRATIONS.SUCCESSFUL_ACTION" alt="successful action illustration" />
+    </div>
+
+    <p class="text-sm font-medium leading-6 text-[#343434]">
+      {{ 'auth.auth_notification.password_create.subtitle' | translate }}
+    </p>
+  </div>
+
+  <div class="flex w-full flex-row justify-center">
+    <button
+      [routerLink]="['/auth/sign-in']"
+      mat-flat-button
+      color="primary"
+      type="button"
+      class="h-11 w-full rounded-lg text-base font-semibold"
+    >
+      {{ 'auth.button.back_to_login' | translate }}
+    </button>
+  </div>
+</ng-template>

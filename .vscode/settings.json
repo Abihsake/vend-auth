@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "vendease",
+        "projectKey": "Vendease_vend-auth"
+    }
+}

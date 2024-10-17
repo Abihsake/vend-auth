@@ -1,0 +1,102 @@
+$vendease-blue-palette: (
+  25: #ffffff,
+  50: #e7ebfc,
+  100: #cfd6fa,
+  200: #b7c2f7,
+  300: #9fadf5,
+  400: #6e84ef,
+  500: #3e5bea,
+  600: #0e32e5,
+  700: #0b28b7,
+  800: #081e89,
+  900: #06145c,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  )
+);
+
+$green-palette: (
+  25: #f6fef9,
+  50: #ecfdf3,
+  100: #d1fadf,
+  200: #a6f4c5,
+  300: #6ce9a6,
+  400: #32d583,
+  500: #12b76a,
+  600: #039855,
+  700: #027a48,
+  800: #05603a,
+  900: #054f31,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  )
+);
+
+$red-palette: (
+  25: #fffbfa,
+  50: #fef3f2,
+  100: #fee4e2,
+  200: #fecdca,
+  300: #fda29b,
+  400: #f97066,
+  500: #f04438,
+  600: #d92d20,
+  700: #b42318,
+  800: #912018,
+  900: #7a271a,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  )
+);
+
+$white-palette: (
+  50: #ffffff,
+  100: #ffffff,
+  200: #ffffff,
+  300: #ffffff,
+  400: #ffffff,
+  500: #ffffff,
+  600: #ffffff,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: black,
+    400: black,
+    500: black,
+    600: black,
+    700: black,
+    800: black,
+    900: black
+  )
+);

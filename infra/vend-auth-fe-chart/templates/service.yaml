@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "vend-auth-fe-chart.fullname" . }}
+  labels:
+    {{- include "vend-auth-fe-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "vend-auth-fe-chart.selectorLabels" . | nindent 4 }}

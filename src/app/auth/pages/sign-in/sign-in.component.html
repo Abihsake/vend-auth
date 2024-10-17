@@ -1,0 +1,143 @@
+<ng-container *ngIf="signInStep === SignInStepEnum.emailAndPassword">
+  <div
+    class="custom-card-shadow w-full lg:w-[448px] xl:w-[555px] flex flex-col gap-6 px-6 lg:px-10 xl:px-16 pt-8 pb-[4.75rem] bg-white rounded-2xl"
+  >
+    <div class="w-full flex flex-col">
+      <h1 class="text-[28px] leading-[42px] font-bold text-[#111111]">
+        {{ 'auth.sign_in.page_title' | translate }}
+      </h1>
+      <p class="text-[#343434] text-sm leading-7 font-semibold">
+        {{ 'auth.sign_in.page_subtitle' | translate }}
+      </p>
+    </div>
+
+    <form class="w-full" [formGroup]="signInForm" (ngSubmit)="signInForm.valid && onSubmit(signInFormData)">
+      <div class="flex w-full flex-col gap-[13px]">
+        <div class="w-full flex flex-col">
+          <mat-divider class="border-gray-200"></mat-divider>
+
+          <div *ngIf="apiError.status" class="w-full px-2.5 py-5">
+            <app-error-display [error]="apiError.message"></app-error-display>
+          </div>
+        </div>
+
+        <div class="flex w-full flex-col gap-2">
+          <label for="emailOrPhoneNumber">
+            {{ 'form.email_or_phone_number.label' | translate }}
+          </label>
+
+          <input
+            data-rms-testid="emailOrPhoneNumber-input"
+            id="emailOrPhoneNumber"
+            formControlName="emailOrPhoneNumber"
+            type="text"
+            placeholder="{{ 'form.email_or_phone_number.placeholder' | translate }}"
+            required
+          />
+
+          <ng-container *ngIf="displayError(signInFormData.emailOrPhoneNumber)">
+            <mat-error
+              class="text-xs font-normal text-error-500"
+              *ngIf="signInFormData.emailOrPhoneNumber.hasError('required')"
+            >
+              {{ 'form.email_or_phone_number.error.required' | translate }}
+            </mat-error>
+          </ng-container>
+        </div>
+
+        <div class="flex w-full flex-col gap-2">
+          <label for="password">
+            {{ 'form.password.label' | translate }}
+          </label>
+          <div class="input-wrapper">
+            <input
+              data-rms-testid="password-input"
+              id="password"
+              formControlName="password"
+              [type]="passwordFields['password'].inputType"
+              placeholder="••••••••"
+              required
+            />
+            <button
+              type="button"
+              class="px-2 flex flex-row items-center justify-center"
+              (click)="toggleVisibility('password', !passwordFields['password'].visible)"
+            >
+              <mat-icon
+                class="h-4 w-4"
+                [svgIcon]="passwordFields['password'].visible ? EYE_SLASH_ICON : EYE_ICON"
+              ></mat-icon>
+            </button>
+          </div>
+
+          <ng-container *ngIf="displayError(signInFormData.password)">
+            <mat-error class="text-xs font-normal text-error-500" *ngIf="signInFormData.password.hasError('required')">
+              {{ 'form.password.error.required' | translate }}
+            </mat-error>
+          </ng-container>
+        </div>
+
+        <div class="flex w-full flex-col gap-2">
+          <a
+            data-rms-testid="forgot-password-text"
+            class="cursor-pointer text-sm font-semibold text-primary-600"
+            [routerLink]="['/auth/forgot-password']"
+          >
+            {{ 'auth.sign_in.forgot_password' | translate }}
+          </a>
+        </div>
+
+        <div class="flex w-full flex-col">
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="signInForm.invalid"
+            class="h-11 w-full rounded-lg text-base font-medium"
+            data-rms-testid="login-btn"
+          >
+            <div class="flex flex-row items-center justify-center gap-2">
+              <span class="text-sm font-semibold">{{ 'auth.sign_in.login' | translate }}</span>
+              <mat-progress-spinner
+                color="accent"
+                *ngIf="isSigningIn"
+                mode="indeterminate"
+                diameter="20"
+                strokeWidth="3"
+              ></mat-progress-spinner>
+            </div>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="flex w-full flex-row items-center justify-center gap-7">
+      <div class="flex-auto border-t-2 border-t-gray-200"></div>
+      <p class="flex-none text-center text-base font-medium text-gray-400">{{ 'common.or' | translate | uppercase }}</p>
+      <div class="flex-auto border-t-2 border-t-gray-200"></div>
+    </div>
+
+    <div class="flex w-full flex-row items-center justify-center text-center">
+      <p class="text-sm text-gray-700 font-medium">
+        {{ 'common.new_to' | translate }}
+        <span
+          data-rms-testid="create_account_text"
+          class="cursor-pointer font-semibold text-primary-600"
+          [routerLink]="['/auth/sign-up']"
+          >{{ 'auth.sign_in.create_account' | translate }}</span
+        >
+      </p>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="signInStep === SignInStepEnum.otp">
+  <app-verify-otp
+    [verificationType]="VerificationTypeEnum.signIn"
+    [emailOrPhoneNumber]="signInFormData.emailOrPhoneNumber.value"
+    [requestToken]="requestToken"
+    (reesendOTP)="resend2FA()"
+    (OTPValidated)="completeSignIn($event)"
+    (backToLogin)="backToLogin()"
+  ></app-verify-otp>
+</ng-container>

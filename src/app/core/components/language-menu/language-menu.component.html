@@ -1,0 +1,30 @@
+<div class="flex w-full flex-row items-center gap-2">
+  <mat-icon [svgIcon]="selectedTranslation.flag"></mat-icon>
+  <div
+    class="text-xs font-bold"
+    [ngClass]="{ 'text-gray-800': displayTextColor === 'gray', 'text-white': displayTextColor === 'white' }"
+  >
+    {{ displayTextFormat === 'code' ? (selectedTranslation.code | uppercase) : (selectedTranslation.name | titlecase) }}
+  </div>
+  <mat-icon
+    [svgIcon]="CHEVRON_DOWN_ICON"
+    class="fill-none"
+    [ngClass]="{ 'stroke-gray-800': displayTextColor === 'gray', 'stroke-white': displayTextColor === 'white' }"
+    [matMenuTriggerFor]="languageMenu"
+    [matMenuTriggerData]="{ languages: LANGUAGES }"
+  ></mat-icon>
+</div>
+
+<mat-menu xPosition="before" #languageMenu="matMenu">
+  <ng-template matMenuContent let-languages="languages">
+    <ng-container *ngFor="let language of languages; last as last">
+      <button mat-menu-item (click)="setLanguage(language)">
+        <div class="flex w-full flex-row items-center gap-2">
+          <mat-icon [svgIcon]="language.flag"></mat-icon>
+          <div class="text-xs font-bold text-gray-400">{{ language.name | titlecase }}</div>
+        </div>
+      </button>
+      <mat-divider *ngIf="!last" class="mx-4 border-t-gray-300"></mat-divider>
+    </ng-container>
+  </ng-template>
+</mat-menu>

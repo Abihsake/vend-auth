@@ -1,0 +1,44 @@
+<swiper-container class="h-full w-full" appSwiper [config]="config" init="false">
+  <ng-container *ngFor="let testimonial of testimonials">
+    <swiper-slide class="flex flex-row justify-start" lazy="true">
+      <div class="bg-transparent p-[15px] w-full flex flex-col gap-6.25">
+        <!-- NOTE: Temporarily removed  -->
+        <!-- <div class="w-24 h-24 object-contain">
+          <img
+            class="w-full h-full object-contain"
+            [src]="testimonial.testifier.business.logo"
+            [alt]="testimonial.testifier.business.name + ' logo'"
+            loading="lazy"
+          />
+        </div> -->
+
+        <div>
+          <img [src]="QUOTE_ILLUSTRATION" alt="quote illustration" />
+        </div>
+
+        <p class="font-bold text-sm lg:text-xl text-[#343434]">
+          {{ testimonial.testimonial }}
+        </p>
+
+        <div class="w-full flex flex-row items-center gap-5">
+          <div class="flex flex-col flex-none">
+            <img
+              class="w-[70px] h-[70px]"
+              [src]="testimonial.testifier.image"
+              [alt]="testimonial.testifier.name + ' image'"
+              loading="lazy"
+            />
+          </div>
+          <div class="w-full flex flex-col gap-2.5 text-[#343434]">
+            <p class="font-bold text-sm lg:text-base">{{ testimonial.testifier.name | titlecase }}</p>
+            <p class="font-light text-xs lg:text-sm">{{ testimonial.testifier.roleDescription }}</p>
+          </div>
+        </div>
+
+        <div></div>
+
+        <div></div>
+      </div>
+    </swiper-slide>
+  </ng-container>
+</swiper-container>

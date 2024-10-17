@@ -1,0 +1,44 @@
+<div class="w-full flex flex-col" [ngClass]="{ 'border-error-300': invalid }">
+  <div class="px-3.5 input-wrapper" [formGroup]="phoneNumberCtrl" [ngClass]="{ 'border-error-300': invalid }">
+    <button
+      type="button"
+      class="flex flex-none flex-row items-center gap-1 text-sm font-medium"
+      data-rms-testid="country-code"
+      (click)="markAsTouched(); markCodeCtrlAsTouched()"
+      [matMenuTriggerFor]="phoneNumberCtrl.disabled ? null : countryCodeMenu"
+    >
+      <span class="text-gray-700 text-sm font-medium">{{ selectedCountry.phoneCode }}</span>
+      <mat-icon
+        [svgIcon]="CHEVRON_DOWN_ICON.name"
+        class="w-5 h-5 fill-none stroke-gray-700"
+        [ngClass]="{ 'stroke-gray-500': phoneNumberCtrl.disabled, 'stroke-gray-700': !phoneNumberCtrl.disabled }"
+      ></mat-icon>
+    </button>
+
+    <input
+      formControlName="number"
+      type="text"
+      minlength="10"
+      maxlength="10"
+      [pattern]="REG_EXP.ONLY_NUMBER"
+      placeholder="0000-00-0000"
+      (focus)="markAsTouched()"
+      required
+      data-rms-testid="phoneNumber-input"
+      id="phoneNumberId"
+    />
+
+    <mat-menu class="w-24" #countryCodeMenu="matMenu" xPosition="before">
+      <ng-template matMenuContent>
+        <ng-container *ngFor="let country of countries">
+          <button mat-menu-item [matTooltip]="country.name" (click)="onSelectCountryPhoneCode(country)">
+            <div class="flex items-center justify-between gap-1 text-sm">
+              <span class="font-medium">{{ country.name | titlecase }}</span>
+              <span>{{ country.phoneCode }}</span>
+            </div>
+          </button>
+        </ng-container>
+      </ng-template>
+    </mat-menu>
+  </div>
+</div>

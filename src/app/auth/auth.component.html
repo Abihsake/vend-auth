@@ -1,0 +1,28 @@
+<div class="flex h-screen w-full flex-col pb-8 xl:gap-16 bg-primary-50 overflow-y-auto">
+  <section id="auth-head" class="w-full">
+    <div class="flex w-full flex-row items-center justify-between px-3 py-8 xl:px-10">
+      <div class="lg:px-4 xl:px-8">
+        <img [src]="vendeaseLogo" alt="Vendease logo" />
+      </div>
+      <div class="lg:px-4 xl:px-8">
+        <app-language-menu
+          [existingLanguage]="existingLanguage$ | async"
+          [displayTextFormat]="'code'"
+        ></app-language-menu>
+      </div>
+    </div>
+  </section>
+
+  <section id="auth-body" class="w-full">
+    <div class="w-full flex flex-row justify-center px-4 lg:px-6 xl:px-10">
+      <div class="lg:px-4 w-full lg:w-auto flex flex-col">
+        <router-outlet></router-outlet>
+      </div>
+      <div
+        class="hidden sm:w-1/2 lg:w-[500px] xl:w-[585px] sm:flex flex-col justify-center sm:pl-8 lg:pl-14 xl:pl-[97.5px]"
+      >
+        <app-testimonials [testimonials]="testimonials"></app-testimonials>
+      </div>
+    </div>
+  </section>
+</div>

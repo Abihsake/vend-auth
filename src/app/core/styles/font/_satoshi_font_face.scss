@@ -1,0 +1,189 @@
+/**
+ * @license
+ *
+ * Font Family: Satoshi
+ * Designed by: Deni Anggara
+ * URL: https://www.fontshare.com/fonts/satoshi
+ * © 2022 Indian Type Foundry
+ *
+ * Font Styles:
+ * Satoshi Variable(Variable font)
+ * Satoshi Variable Italic(Variable font)
+ * Satoshi Light
+ * Satoshi Light Italic
+ * Satoshi Regular
+ * Satoshi Italic
+ * Satoshi Medium
+ * Satoshi Medium Italic
+ * Satoshi Bold
+ * Satoshi Bold Italic
+ * Satoshi Black
+ * Satoshi Black Italic
+ *
+*/
+
+/**
+* This is a variable font
+* You can controll variable axes as shown below:
+* font-variation-settings: 'wght' 900.0;
+*
+* available axes:
+
+* 'wght' (range from 300.0 to 900.0)
+
+*/
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-Variable'),
+    local('Satoshi-Variable'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Variable.woff') format('woff');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+/**
+* This is a variable font
+* You can controll variable axes as shown below:
+* font-variation-settings: 'wght' 900.0;
+*
+* available axes:
+
+* 'wght' (range from 300.0 to 900.0)
+
+*/
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-VariableItalic'),
+    local('Satoshi-VariableItalic'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-VariableItalic.woff') format('woff');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-Light'),
+    local('Satoshi-Light'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Light.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Light.woff') format('woff');
+  font-weight: 300;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-LightItalic'),
+    local('Satoshi-LightItalic'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-LightItalic.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-display: swap;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-Regular'),
+    local('Satoshi-Regular'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Regular.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Regular.woff') format('woff');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-Italic'),
+    local('Satoshi-Italic'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Italic.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Italic.woff') format('woff');
+  font-weight: 400;
+  font-display: swap;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-Medium'),
+    local('Satoshi-Medium'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Medium.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Medium.woff') format('woff');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-MediumItalic'),
+    local('Satoshi-MediumItalic'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-MediumItalic.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-MediumItalic.woff') format('woff');
+  font-weight: 500;
+  font-display: swap;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-Bold'),
+    local('Satoshi-Bold'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Bold.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Bold.woff') format('woff');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-BoldItalic'),
+    local('Satoshi-BoldItalic'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-BoldItalic.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-display: swap;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-Black'),
+    local('Satoshi-Black'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Black.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-Black.woff') format('woff');
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src:
+    local('Satoshi-BlackItalic'),
+    local('Satoshi-BlackItalic'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-BlackItalic.woff2') format('woff2'),
+    url('https://vendease-website-assets.s3.amazonaws.com/fonts/satoshi/Satoshi-BlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-display: swap;
+  font-style: italic;
+}

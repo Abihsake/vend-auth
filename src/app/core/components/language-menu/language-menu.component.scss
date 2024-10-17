@@ -1,0 +1,15 @@
+.display-text-white {
+  color: white;
+}
+
+.display-text-gray {
+  @apply text-gray-400;
+}
+
+.display-text-code {
+  text-transform: uppercase;
+}
+
+.display-text-name {
+  text-transform: capitalize;
+}
