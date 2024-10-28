@@ -11,18 +11,18 @@ export const environment = {
   baseDomain: 'vendease.com',
   AUTH_SERVICE: {
     MARKER: 'auth',
-    URL: 'https://vendease.ideassionlive.in/auths/v1'
+    URL: 'http://vendease.ideassionlive.in/auths/v1'
   },
   BUSINESS_SERVICE: {
     MARKER: 'business',
-    URL: 'https://vendease.ideassionlive.in/bs/v1'
+    URL: 'http://vendease.ideassionlive.in/bs/v1'
   },
   TENANT_USER_MANAGEMENT_SERVICE: {
     MARKER: 'tums',
-    URL: 'https://vendease.ideassionlive.in/tums/v1'
+    URL: 'http://vendease.ideassionlive.in/tums/v1'
   },
   // RMS_URL: 'https://vend-rms.vendease.com/'
-  RMS_URL: 'http://localhost:4202/'
+  RMS_URL: 'http://13.233.222.66/rms/'
 };
 
 /*
